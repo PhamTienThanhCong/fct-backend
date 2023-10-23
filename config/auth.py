@@ -3,12 +3,15 @@ from fastapi import HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-
+import os
 
 class AuthHandler():
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"])
-    secret = "BE_CONG_SECRET"
+    secret = os.environ.get("MY_APP_SECRET_KEY")
+    if secret is None:
+        raise Exception("Không tìm thấy biến môi trường MY_APP_SECRET_KEY")
+
 
     def get_password_hash(self, password):
         return self.pwd_context.hash(password)
