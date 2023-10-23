@@ -8,9 +8,7 @@ import os
 class AuthHandler():
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"])
-    secret = os.environ.get("MY_APP_SECRET_KEY")
-    if secret is None:
-        raise Exception("Không tìm thấy biến môi trường MY_APP_SECRET_KEY")
+    secret = "myjwtsecret"
 
 
     def get_password_hash(self, password):
