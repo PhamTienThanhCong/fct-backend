@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine, MetaData
-from dotenv import load_dotenv
 
 DB_USER='root'
 DB_PASS=""
