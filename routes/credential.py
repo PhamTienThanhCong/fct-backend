@@ -8,15 +8,22 @@ credential = APIRouter()
 auth_handler = AuthHandler()
 
 
+@credential.get("/")
+async def read_users():
+    data = conn.execute(users.select()).fetchall()
+    # return data without password
+    print(data)
+    return "Hello"
 @credential.post("/register", status_code=201)
 async def register(user: User):
-    all_users = conn.execute(users.select()).fetchall()
-    if any(x['email'] == user.email for x in all_users):
-        raise HTTPException(400, 'Email is taken')
+    data = conn.execute(users.select().where(users.c.email == user.email)).fetchall()
+    if len(data) != 0:
+        print(data)
+        raise HTTPException(400, "Email already exist")
 
     hashed_password = auth_handler.get_password_hash(user.password)
 
-    conn.execute(users.insert().values(
+    res = conn.execute(users.insert().values(
         firstname=user.firstname,
         lastname=user.lastname,
         email=user.email,
@@ -26,8 +33,10 @@ async def register(user: User):
         gender=user.gender,
         dob=user.dob
     ))
-
-    return conn.execute(users.select().where(users.c.email == user.email)).fetchall()
+    print(res)
+    # data = conn.execute(users.select().where(users.c.email == user.email)).fetchall()
+    # return data
+    return "Created"
 
 
 @credential.post("/login")
