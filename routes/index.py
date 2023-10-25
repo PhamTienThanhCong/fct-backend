@@ -1,1 +1,2 @@
-from routes.credential import credential
+from routes.user import user
+from routes.auth import auth
