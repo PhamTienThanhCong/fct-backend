@@ -1,8 +1,6 @@
-from sqlalchemy import Table, Column
-from sqlalchemy.sql.sqltypes import Integer, String, TIMESTAMP, Date
-from config.db import meta
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, TIMESTAMP
 from datetime import datetime
-
+from config.db import connect_string, engine, meta, conn
 
 users = Table(
     'user',
@@ -16,6 +14,7 @@ users = Table(
     Column('location_id', Integer()),
     Column('gender', String(10)),
     Column('dob', String(10)),
-    Column('created_at', TIMESTAMP(timezone=False),
-           default=datetime.now()),
+    Column('created_at', TIMESTAMP(timezone=False), default=datetime.now()),
 )
+
+meta.create_all(engine)
