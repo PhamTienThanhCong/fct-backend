@@ -1,20 +1,17 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, TIMESTAMP
-from datetime import datetime
-from config.db import connect_string, engine, meta, conn
+from sqlalchemy import Column, Table
+from sqlalchemy.sql.sqltypes import Integer, String
+from config.db import meta, engine
 
 users = Table(
-    'user',
+    "users",
     meta,
-    Column('id', Integer, primary_key=True),
-    Column('firstname', String(55)),
-    Column('lastname', String(45)),
-    Column('email', String(45)),
-    Column('password', String(255)),
-    Column('avatar', String(255)),
-    Column('location_id', Integer()),
-    Column('gender', String(10)),
-    Column('dob', String(10)),
-    Column('created_at', TIMESTAMP(timezone=False), default=datetime.now()),
+    Column("id", Integer, primary_key=True),
+    Column(
+        "name",
+        String(255),
+    ),
+    Column("email", String(255)),
+    Column("password", String(255)),
 )
 
 meta.create_all(engine)
