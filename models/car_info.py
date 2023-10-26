@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Table, ForeignKey
-from sqlalchemy.sql.sqltypes import Integer, String, Text
+from sqlalchemy.sql.sqltypes import Integer, String
 from config.db import meta, engine
 
 car_infos = Table(
