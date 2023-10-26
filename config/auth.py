@@ -3,13 +3,13 @@ from fastapi import HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-import os
+from config.env_value import SECRET_KEY
 
 class AuthHandler():
     security = HTTPBearer()
     pwd_context = CryptContext(schemes=["bcrypt"])
-    secret = "myjwtsecret"
 
+    secret = SECRET_KEY
 
     def get_password_hash(self, password):
         return self.pwd_context.hash(password)

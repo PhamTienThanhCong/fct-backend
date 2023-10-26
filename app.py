@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 from routes.index import user, auth
+from config.env_value import APP_NAME, DESCRIPTION_APP, VERSION
 
 app = FastAPI(
-    title="Users API",
-    description="a REST API using python and mysql",
-    version="0.0.1"
+    title="API For {} App".format(APP_NAME),
+    description=DESCRIPTION_APP,
+    version=VERSION
 )
 
 app.include_router(auth)
