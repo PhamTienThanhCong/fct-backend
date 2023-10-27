@@ -9,3 +9,4 @@ from routes.auth.customer import customer
 from routes.car_info import car_info
 from routes.station import station
 from routes.charging_port import charging_port
+from routes.comment import comment
