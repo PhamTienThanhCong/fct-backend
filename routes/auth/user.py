@@ -7,11 +7,8 @@ from sqlalchemy import func, select
 from models.user import users
 from models.role import roles
 from schemas.user import UserLogin, UserPayload, UserAll
-from cryptography.fernet import Fernet
 
 user = APIRouter()
-key = Fernet.generate_key()
-f = Fernet(key)
 auth_handler = AuthHandler()
 
 async def checkUser(user):

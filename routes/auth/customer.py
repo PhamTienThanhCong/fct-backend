@@ -5,11 +5,8 @@ from typing import List
 from starlette.status import HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, HTTP_404_NOT_FOUND
 from models.customer import customers
 from schemas.customer import CustomerRepose, CustomerLogin, CustomerPayload, CustomerRegister
-from cryptography.fernet import Fernet
 
 customer = APIRouter()
-key = Fernet.generate_key()
-f = Fernet(key)
 auth_handler = AuthHandler()
 
 # login
