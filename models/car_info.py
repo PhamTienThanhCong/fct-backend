@@ -12,7 +12,7 @@ car_infos = Table(
     Column("license_plate", String(50), nullable=False),
     Column("vehicle_condition", String(255), nullable=True),
     Column("battery_status", String(100), nullable=True),
-    Column("year_of_manufacture", String(50), nullable=True),
+    Column("year_of_manufacture", Integer, nullable=True),
     Column("created_at", String(50), nullable=True)
 )
 

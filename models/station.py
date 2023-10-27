@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Table, ForeignKey
-from sqlalchemy.sql.sqltypes import String, Integer, Float
+from sqlalchemy.sql.sqltypes import String, Integer, Float, DateTime
 from config.db import meta, engine
+import datetime
 
 stations = Table(
     "stations",
@@ -15,8 +16,8 @@ stations = Table(
     Column("phone", String(20), nullable=False),
     Column("email", String(250), nullable=False),
     Column("image", String(255), nullable=True),
-    Column("open_time", String(20), nullable=True, default="00:00:00"),
-    Column("close_time", String(20), nullable=True, default="00:00:00"),
+    Column("open_time", DateTime, nullable=True, default=datetime.datetime.now()),
+    Column("close_time", DateTime, nullable=True, default=datetime.datetime.now()),
     Column("is_order", Integer, nullable=True, default=0),
 )
 

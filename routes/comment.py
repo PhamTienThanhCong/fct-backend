@@ -53,8 +53,6 @@ async def create_comment(payload: CommentPayload, auth = Depends(auth_handler.au
 
     return convert_to_comment_dict(new_comment)
 
-
-
 @comment.put("/{id}", response_model=CommentResponse)
 async def update_comment(id: int, payload: CommentUpdatePayload, auth = Depends(auth_handler.auth_wrapper_user)):
     customer_id = auth['id']

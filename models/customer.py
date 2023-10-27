@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Table
-from sqlalchemy.sql.sqltypes import String, Integer
+from sqlalchemy.sql.sqltypes import String, Integer, Date
 from config.db import meta, engine
 
 customers = Table(
@@ -11,7 +11,7 @@ customers = Table(
     Column("full_name", String(100), nullable=False),
     Column("phone", String(20), nullable=False),
     Column("address", String(255), nullable=True),
-    Column("birthday", String(20), nullable=True),
+    Column("birthday", Date, nullable=True),
     Column("card_id", String(25), nullable=True),
 )
 
