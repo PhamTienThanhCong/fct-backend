@@ -27,14 +27,20 @@ async def create_station(station: StationPayload, auth=Depends(auth_handler.auth
 
 @station.put("/{id}", response_model=StationResponse)
 async def update_station(id: int, station: StationPayload, auth=Depends(auth_handler.auth_wrapper_admin)):
-    owner_id = auth.id
+    owner_id = auth['id']
     query = stations.update().where(stations.c.id == id).values(**station.dict(), owner_id=owner_id)
     conn.execute(query)
     return conn.execute(stations.select().where(stations.c.id == id)).first()
 
 @station.delete("/{id}")
 async def delete_station(id: int, auth=Depends(auth_handler.auth_wrapper_admin)):
-    owner_id = auth.id
-    query = stations.delete().where(stations.c.id == id)
+    owner_id = auth['id']
+    # kiểm tra xem station có tồn tại không
+    query = stations.select().where(stations.c.id == id and stations.c.owner_id == owner_id)
+    station = conn.execute(query).first()
+    if not station:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail=f"Station with id: {id} not found")
+    # xóa station
+    query = stations.delete().where(stations.c.id == id and stations.c.owner_id == owner_id)
     conn.execute(query)
     return {"message": "Station with id: {} deleted successfully!".format(id)}
