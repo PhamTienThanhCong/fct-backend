@@ -10,13 +10,27 @@ from schemas.charging_port import ChargingPortPayload, ChargingPortResponse, Cha
 charging_port = APIRouter()
 auth_handler = AuthHandler()
 
-@charging_port.get("/stations/{station_id}", response_model=List[ChargingPortResponse])
-async def get_all_charging_port(station_id: int):
+async def check_station_owner(id: int, owner_id: int):
+    query = charging_ports.select().where(charging_ports.c.id == id)
+    charging_port = conn.execute(query).first()
+    if not charging_port:
+        raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Charging port with given id not found")
+    
+    # check station is owner
+    query = stations.select().where(stations.c.id == charging_port.station_id )
+    station = conn.execute(query).first()
+    if station.owner_id != owner_id:
+        raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="You are not owner of this station")
+    
+    return charging_port
+
+@charging_port.get("/s/{station_id}", response_model=List[ChargingPortResponse])
+async def get_all_charging_port_by_stations(station_id: int):
     query = charging_ports.select().where(charging_ports.c.station_id == station_id)
     return conn.execute(query).fetchall()
 
 @charging_port.get("/{id}", response_model=ChargingPortResponse)
-async def get_charging_port(id: int, auth=Depends(auth_handler.auth_wrapper_admin)):
+async def get_charging_port(id: int):
     query = charging_ports.select().where(charging_ports.c.id == id)
     charging_port = conn.execute(query).first()
     if not charging_port:
@@ -24,13 +38,16 @@ async def get_charging_port(id: int, auth=Depends(auth_handler.auth_wrapper_admi
     return charging_port
 
 @charging_port.post("/", response_model=ChargingPortResponse)
-async def create_charging_port(payload: ChargingPortPayload):
+async def create_charging_port(payload: ChargingPortPayload, auth=Depends(auth_handler.auth_wrapper_admin)):
     # check station_id exist
-    query = stations.select().where(stations.c.id == payload.station_id)
+    owner_id = auth["id"]
+    query = stations.select().where(stations.c.id == payload.station_id )
     station = conn.execute(query).fetchall()
     if not station:
         raise HTTPException(status_code=HTTP_404_NOT_FOUND, detail="Station with given id not found")
-    
+    if station[0].owner_id != owner_id:
+        raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="You are not owner of this station")
+
     # check port_code == port_code and station_id == station_id exist
     query = charging_ports.select().where(charging_ports.c.station_id == payload.station_id)
     charging_port = conn.execute(query).fetchall()
@@ -44,13 +61,32 @@ async def create_charging_port(payload: ChargingPortPayload):
     return conn.execute(charging_ports.select().where(charging_ports.c.id == last_record_id)).first()
 
 @charging_port.put("/{id}", response_model=ChargingPortResponse)
-async def update_charging_port(id: int, payload: ChargingPortUpload):
+async def update_charging_port(id: int, payload: ChargingPortUpload, auth=Depends(auth_handler.auth_wrapper_admin)):
+    # check station_id exist
+    owner_id = auth["id"]
+    
+    charging_port = await check_station_owner(id, owner_id)
+    
+    if charging_port.port_code != payload.port_code:
+        # check port_code == port_code and station_id == station_id exist
+        query = charging_ports.select().where(charging_ports.c.station_id == charging_port.station_id)
+        charging_port = conn.execute(query).fetchall()
+        if charging_port:
+            for port in charging_port:
+                if port.port_code == payload.port_code:
+                    raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="Port code already exist")
+
     query = charging_ports.update().where(charging_ports.c.id == id).values(**payload.dict())
     conn.execute(query)
     return conn.execute(charging_ports.select().where(charging_ports.c.id == id)).first()
 
 @charging_port.delete("/{id}")
-async def delete_charging_port(id: int):
+async def delete_charging_port(id: int, auth=Depends(auth_handler.auth_wrapper_admin)):
+    # check station_id exist
+    owner_id = auth["id"]
+
+    await check_station_owner(id, owner_id)
+    
     query = charging_ports.delete().where(charging_ports.c.id == id)
     conn.execute(query)
     return {"message": "Charging port with id: {} deleted successfully!".format(id)}
