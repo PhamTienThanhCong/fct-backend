@@ -1,12 +1,14 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from config.auth import AuthHandler
 from config.db import conn
-from typing import List, Optional
-from starlette.status import HTTP_204_NO_CONTENT
+from typing import List
+from starlette.status import HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, HTTP_404_NOT_FOUND
 from sqlalchemy import func, select
 from models.car_type import car_types
 from schemas.car_type import CarType, CarTypePayload
 
 car_type = APIRouter()
+auth_handler = AuthHandler()
 
 # get all car_type
 @car_type.get("/", response_model=List[CarType])
@@ -15,11 +17,11 @@ async def get_all_car_type():
 
 # create new car_type
 @car_type.post("/", response_model=CarType)
-async def create_car_type(car_type: CarType):
+async def create_car_type(car_type: CarType, auth=Depends(auth_handler.auth_wrapper_super_admin)):
     # nếu tồn tại id thì trả về lỗi 
     check = conn.execute(car_types.select().where(car_types.c.id == car_type.id)).fetchall()
     if check:
-        raise HTTPException(418, "Car Type with id '{}' already existe".format(car_type.id))
+        raise HTTPException(HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, "Car Type with id '{}' already existe".format(car_type.id))
     # nếu không tồn tại id thì thêm mới
     conn.execute(car_types.insert().values(
         id=car_type.id,
@@ -32,7 +34,7 @@ async def create_car_type(car_type: CarType):
 
 # update car_type
 @car_type.put("/{id}", response_model=CarType)
-async def update_car_type(id: str, car_type: CarTypePayload):
+async def update_car_type(id: str, car_type: CarTypePayload, auth=Depends(auth_handler.auth_wrapper_super_admin)):
     conn.execute(car_types.update().values(
         name=car_type.name,
         country=car_type.country,
@@ -40,12 +42,12 @@ async def update_car_type(id: str, car_type: CarTypePayload):
     ).where(car_types.c.id == id))
     data = conn.execute(car_types.select().where(car_types.c.id == id)).first()
     if not data:
-        raise HTTPException(404, "Car Type with id '{}' not found".format(id))
+        raise HTTPException(HTTP_404_NOT_FOUND, "Car Type with id '{}' not found".format(id))
     return data
 
 # delete car_type
 @car_type.delete("/{id}")
-async def delete_car_type(id: str):
+async def delete_car_type(id: str, auth=Depends(auth_handler.auth_wrapper_super_admin)):
     conn.execute(car_types.delete().where(car_types.c.id == id))
     return {
         "message": "Car Type with id '{}' has been deleted.".format(id),

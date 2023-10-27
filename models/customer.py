@@ -6,13 +6,13 @@ customers = Table(
     "customers",
     meta,
     Column("id", Integer, primary_key=True),
-    Column("email", String(250), nullable=False),
+    Column("email", String(250), nullable=True),
     Column("password", String(255), nullable=False),
     Column("full_name", String(100), nullable=False),
     Column("phone", String(20), nullable=False),
     Column("address", String(255), nullable=True),
     Column("birthday", String(20), nullable=True),
-    Column("card_id", String(25), nullable=False),
+    Column("card_id", String(25), nullable=True),
 )
 
 meta.create_all(engine)

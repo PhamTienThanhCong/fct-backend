@@ -4,3 +4,5 @@
 from routes.role import role
 from routes.rescue_service import rescue_service
 from routes.car_type import car_type
+from routes.auth.user import user
+from routes.auth.customer import customer

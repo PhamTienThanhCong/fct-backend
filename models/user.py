@@ -13,9 +13,8 @@ users = Table(
     Column("phone", String(20), nullable=False),
     Column("address", String(255), nullable=False),
     Column("card_id", String(25), nullable=False),
-    Column("tax_code", String(25), nullable=False),
     Column("title", String(100), nullable=False),
-    Column("description", String(255), nullable=False),
+    Column("description", String(255), nullable=True),
 )
 
 meta.create_all(engine)

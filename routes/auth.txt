@@ -24,7 +24,7 @@ async def login(userPayload: UserLogin):
         return {"token": token}
     
 @auth.get("/get_user", tags=["auth"], description="Get user by token")
-async def get_user_by_token(id=Depends(auth_handler.auth_wrapper)):
+async def get_user_by_token(id=Depends(auth_handler.auth_wrapper_super_admin)):
     user_query = select([users.c.id, users.c.email, users.c.name]).where(users.c.id == id)
     user = conn.execute(user_query).first()
     return user

@@ -17,11 +17,11 @@ class AuthHandler():
     def verify_password(self, password, hashed_password):
         return self.pwd_context.verify(password, hashed_password)
 
-    def encode_token(self, id):
+    def encode_token(self, account):
         payload = {
             'exp': datetime.utcnow() + timedelta(days=30),
             'iat': datetime.utcnow(),
-            'sub': id
+            'sub': account
         }
         return jwt.encode(
             payload,
@@ -38,6 +38,21 @@ class AuthHandler():
                 status_code=401, detail='Signature has expired')
         except jwt.InvalidTokenError as e:
             raise HTTPException(status_code=401, detail='Invalid token')
+    
+    def auth_wrapper_super_admin(self, auth: HTTPAuthorizationCredentials = Security(security)):
+        payload = self.decode_token(auth.credentials)
+        if payload['role_id'] != 1:
+            raise HTTPException(401, "Invalid token")
+        return payload
 
-    def auth_wrapper(self, auth: HTTPAuthorizationCredentials = Security(security)):
-        return self.decode_token(auth.credentials)
+    def auth_wrapper_admin(self, auth: HTTPAuthorizationCredentials = Security(security)):
+        payload = self.decode_token(auth.credentials)
+        if payload['role_id'] == 0:
+            raise HTTPException(401, "Invalid token")
+        return payload
+    
+    def auth_wrapper_user(self, auth: HTTPAuthorizationCredentials = Security(security)):
+        payload = self.decode_token(auth.credentials)
+        if payload['role_id'] != 0:
+            raise HTTPException(401, "Invalid token")
+        return payload
