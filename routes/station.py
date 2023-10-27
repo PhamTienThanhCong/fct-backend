@@ -11,7 +11,7 @@ station = APIRouter()
 auth_handler = AuthHandler()
 
 @station.get("/", response_model=List[StationResponse])
-async def get_add_station():
+async def get_all_station():
     return conn.execute(stations.select()).fetchall()
 
 @station.get("/{id}", response_model=StationResponse)
