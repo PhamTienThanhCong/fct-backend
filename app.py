@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI
 from config.auth import AuthHandler
-from routes.index import role, rescue_service, car_type, user, customer, car_info
+from routes.index import role, rescue_service, car_type, user, customer, car_info, station
 from config.env_value import APP_NAME, DESCRIPTION_APP, VERSION
 
 app = FastAPI(
@@ -11,6 +11,7 @@ app = FastAPI(
 )
 auth_handler = AuthHandler()
 
+app.include_router(station, prefix="/station", tags=["Station"])
 app.include_router(customer, prefix="/customer", tags=["Customer"])
 app.include_router(user, prefix="/user", tags=["Admin"])
 app.include_router(car_info, prefix="/car-info", tags=["Car Info"])
