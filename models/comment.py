@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Table, ForeignKey
 from sqlalchemy.sql.sqltypes import String, Integer, DateTime
+from sqlalchemy import func
 from config.db import meta, engine
-import datetime
 
 comments = Table(
     "comments",
@@ -12,7 +12,7 @@ comments = Table(
     Column("title", String(255), nullable=False),
     Column("content", String(255), nullable=False),
     Column("rating", Integer, nullable=False),
-    Column("created_at", DateTime, nullable=False, default=datetime.datetime.now()),
+    Column("created_at", DateTime, nullable=False, server_default=func.now()),
 )
 
 meta.create_all(engine)

@@ -7,13 +7,13 @@ class CommentPayload(BaseModel):
     title: constr(max_length=255)
     content: constr(max_length=255)
     rating: conint(ge=1, le=5)
+    created_at: datetime.datetime
 
 class CustomerResponse(BaseModel):
     id: int
     full_name: Optional[str]
     phone: Optional[str]
     address: Optional[str]
-    created_at: datetime.datetime
 
 class CommentResponse(CommentPayload):
     id: int

@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Table, ForeignKey
 from sqlalchemy.sql.sqltypes import String, Integer, Float, DateTime
 from config.db import meta, engine
-import datetime
+from sqlalchemy import func
 
 stations = Table(
     "stations",
@@ -16,8 +16,8 @@ stations = Table(
     Column("phone", String(20), nullable=False),
     Column("email", String(250), nullable=False),
     Column("image", String(255), nullable=True),
-    Column("open_time", DateTime, nullable=True, default=datetime.datetime.now()),
-    Column("close_time", DateTime, nullable=True, default=datetime.datetime.now()),
+    Column("open_time", DateTime, nullable=True, server_default=func.now()),
+    Column("close_time", DateTime, nullable=True, server_default=func.now()),
     Column("is_order", Integer, nullable=True, default=0),
 )
 
