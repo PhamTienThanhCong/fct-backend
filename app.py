@@ -1,7 +1,7 @@
 from fastapi import Depends, FastAPI
 from config.auth import AuthHandler
 from routes.index import role, rescue_service, car_type, user, customer, car_info, station, charging_port, comment, order
-from config.env_value import APP_NAME, DESCRIPTION_APP, VERSION
+from constants.env_value import APP_NAME, DESCRIPTION_APP, VERSION
 
 app = FastAPI(
     title="API For {} App".format(APP_NAME),

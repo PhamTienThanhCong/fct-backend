@@ -25,6 +25,14 @@ async def create_role(role: Role, auth=Depends(auth_handler.auth_wrapper_admin))
     # return role has been created
     return conn.execute(roles.select().where(roles.c.id == roleCreate.lastrowid)).first()
 
+# edit role
+@role.put("/{id}")
+async def edit_role(id: str, role: Role, auth=Depends(auth_handler.auth_wrapper_admin)):
+    conn.execute(roles.update().values(
+        name=role.name,
+        description=role.description
+    ).where(roles.c.id == id))
+    return conn.execute(roles.select().where(roles.c.id == id)).first()
 
 # delete role
 @role.delete("/{id}")

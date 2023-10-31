@@ -8,7 +8,7 @@ class User(BaseModel):
     phone: constr(max_length=20)
     address: constr(max_length=255)
     card_id: constr(max_length=25)
-    title: constr(max_length=100)
+    title: Optional[constr(max_length=100)]
     description: Optional[str]
 
 class UserPayload(User):

@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, MetaData
-from config.env_value import DB_USER, DB_HOST, DB_PORT, DB_NAME
+from constants.env_value import DB_USER, DB_HOST, DB_PORT, DB_NAME
 
 load_dotenv()
 

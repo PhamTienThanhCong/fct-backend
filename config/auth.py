@@ -3,7 +3,7 @@ from fastapi import HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from config.env_value import SECRET_KEY
+from constants.env_value import SECRET_KEY
 
 class AuthHandler():
     security = HTTPBearer()
