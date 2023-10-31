@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Table, ForeignKey
 from sqlalchemy.sql.sqltypes import String, Integer, Float, DateTime
+from sqlalchemy import func
 from config.db import meta, engine
 
 orders = Table(
@@ -13,6 +14,7 @@ orders = Table(
     Column("end_time", DateTime, nullable=False),
     Column("total_price", Float, nullable=False),
     Column("total_time", Integer, nullable=False),
+    Column("created_at", DateTime, nullable=False, server_default=func.now()),
 )
 
 meta.create_all(engine)
