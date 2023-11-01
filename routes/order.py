@@ -3,8 +3,8 @@ from config.auth import AuthHandler
 from config.db import conn
 from typing import List
 from starlette.status import HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, HTTP_404_NOT_FOUND
-from sqlalchemy import select, and_
-from constants.main import CHARING_STATUS, CHARING_STATUS_TEXT, ORDER_STATUS, ORDER_STATUS_TEXT
+from sqlalchemy import select
+from constants.main import CHARING_STATUS, CHARING_STATUS_TEXT, ORDER_STATUS, ORDER_STATUS_TEXT, AcceptType
 from models.charging_port import charging_ports
 from models.order import orders
 from models.user import users
@@ -100,18 +100,17 @@ async def create_order(payload: OrderPayload, auth = Depends(auth_handler.auth_w
     return format_respond(conn.execute(query).first())
 
 # ACCEPT ORDER
-@order.put("/accept/{id}")
-async def accept_order(id: int, auth = Depends(auth_handler.auth_wrapper_admin)):
+@order.put("/{accept_type}/{id}", response_model=OrderResponse)
+async def accept_order(
+    id: int, 
+    accept_type: AcceptType = AcceptType.accept,
+    auth = Depends(auth_handler.auth_wrapper_admin)):
     # get charging_port by id
     owner_id = auth["id"]
 
-    # Giả sử bạn đã có các đối tượng "orders", "stations", "charging_ports" và "id".
-
-    from sqlalchemy import select, text
-
     # Giả sử bạn đã có các đối tượng "orders", "charging_ports", "stations", và "id".
 
-    query = select([orders,stations]).\
+    query = select([orders,stations, charging_ports]).\
         select_from(
             orders.join(
                 charging_ports,
@@ -130,7 +129,37 @@ async def accept_order(id: int, auth = Depends(auth_handler.auth_wrapper_admin))
     if data["owner_id"] != owner_id:
         raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="You are not owner of this station")
 
-    if data["status"] != ORDER_STATUS["ORDERED"]:
-        raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="Order is {}".format(ORDER_STATUS_TEXT[data["status"]]))
+    if data["status"] == ORDER_STATUS["FINISH_ORDER"]:
+        raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="Order is finished")
 
-    return data
+    if accept_type == "accept":
+        if data["status_1"] != CHARING_STATUS["FREE"]:
+            raise HTTPException(status_code=HTTP_451_UNAVAILABLE_FOR_LEGAL_REASONS, detail="Charging port is {}".format(CHARING_STATUS_TEXT[data["status"]]))    
+        # cập nhật trạng thái của order
+        query = orders.update().where(orders.c.id == id).values(status=ORDER_STATUS["CONFIRM_ORDER"])
+        conn.execute(query)
+
+        # cập nhật trạng thái của charging port
+        query = charging_ports.update().where(charging_ports.c.id == data["charging_port_id"]).values(status=CHARING_STATUS["ORDERED"])
+        conn.execute(query)
+    
+    if accept_type == "cancel":
+        # cập nhật trạng thái của order
+        query = orders.update().where(orders.c.id == id).values(status=ORDER_STATUS["CANCEL_ORDER"])
+        conn.execute(query)
+
+        # cập nhật trạng thái của charging port
+        query = charging_ports.update().where(charging_ports.c.id == data["charging_port_id"]).values(status=CHARING_STATUS["FREE"])
+        conn.execute(query)
+
+    if accept_type == "finish":
+        # cập nhật trạng thái của order
+        query = orders.update().where(orders.c.id == id).values(status=ORDER_STATUS["FINISH_ORDER"])
+        conn.execute(query)
+
+        # cập nhật trạng thái của charging port
+        query = charging_ports.update().where(charging_ports.c.id == data["charging_port_id"]).values(status=CHARING_STATUS["FREE"])
+        conn.execute(query)
+
+    query = select([orders, customers]).select_from(orders.join(customers)).where(orders.c.id == id)
+    return format_respond(conn.execute(query).first())

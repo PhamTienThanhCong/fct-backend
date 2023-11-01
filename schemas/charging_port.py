@@ -10,6 +10,10 @@ class ChargingPortUpload(BaseModel):
 class ChargingPortPayload(ChargingPortUpload):
     station_id: int
 
-class ChargingPortResponse(ChargingPortPayload):
+class ChargingPortResponse(BaseModel):
     id: int
-    status: Optional[int]
+    station_id: int
+    port_code: str
+    price: str
+    power: str
+    status: Optional[str]
