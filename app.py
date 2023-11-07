@@ -1,5 +1,5 @@
 from fastapi import Depends, FastAPI
-from config.auth import AuthHandler
+from fastapi.middleware.cors import CORSMiddleware
 from routes.index import role, rescue_service, car_type, user, customer, car_info, station, charging_port, comment, order
 from constants.env_value import APP_NAME, DESCRIPTION_APP, VERSION
 
@@ -9,7 +9,21 @@ app = FastAPI(
     version=VERSION,
     # root_path="/api/{0}".format(VERSION),
 )
-auth_handler = AuthHandler()
+
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(order, prefix="/order", tags=["Order"])
 app.include_router(comment, prefix="/comment", tags=["Comment"])
