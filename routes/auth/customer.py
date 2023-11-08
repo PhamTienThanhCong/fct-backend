@@ -57,6 +57,7 @@ async def update_customer(id: int, customer: CustomerPayload, auth=Depends(auth_
     password_hash = auth_handler.get_password_hash(customer.password)
     conn.execute(customers.update().where(customers.c.id == id).values(
         full_name=customer.full_name,
+        email=customer.email,
         password=password_hash,
         address=customer.address,
         birthday=customer.birthday,
