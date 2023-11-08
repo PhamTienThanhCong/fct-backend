@@ -1,0 +1,123 @@
+{
+    "intents": [
+        {
+            "patterns": [
+                "hello",
+                "Xin chào",
+                "hi",
+                "alo",
+                "shop ơi"
+            ],
+            "responses": [
+                "shop điện tử, xin chào quý khách ạ!\nQuý khách cần giúp đỡ gì ạ?",
+                "Chào bạn, bên mình có thể giúp gì cho bạn ạ !"
+            ],
+            "tag": "greeting"
+        },
+        {
+            "patterns": [
+                "Bên bạn còn Iphone X không",
+                "Còn iphone X không",
+                "Giá iphone X bao nhiêu",
+                "Iphone X bao nhiêu",
+                "Iphone X còn không"
+            ],
+            "responses": [
+                "Iphone X còn hàng, giá 20 triệu ạ, quý khách có muốn đặt hàng không ạ?",
+                "Iphone X hết hàng ạ, quý khách có thể đặt hàng trước ạ"
+            ],
+            "tag": "iphoneX"
+        },
+        {
+            "patterns": [
+                "Đặt hàng",
+                "Đặt hàng ngay"
+            ],
+            "responses": [
+                "Quý khách vui lòng nhập số điện thoại để chúng tôi liên hệ ạ",
+                "Quý khách vui lòng nhập địa chỉ để chúng tôi giao hàng ạ"
+            ],
+            "tag": "orderIphoneX"
+        },
+        {
+            "patterns": [
+                "Bên mình thanh toán như thế nào ạ",
+                "Thanh toán như thế nào ạ",
+                "Thanh toán như thế nào",
+                "Chuyển khoản được không ạ",
+                "Chuyển khoản được không",
+                "Thanh toán bằng tiền mặt được không ạ",
+                "Thanh toán bằng tiền mặt được không"
+            ],
+            "responses": [
+                "Quý khách có thể thanh toán bằng tiền mặt hoặc chuyển khoản ạ",
+                "Quý khách có thể thanh toán bằng tiền mặt hoặc chuyển khoản ạ"
+            ],
+            "tag": "payments"
+        },
+        {
+            "patterns": [
+                "Cửa hàng ở đâu ạ",
+                "Cửa hàng ở đâu",
+                "mình có thể đến mua hàng trực tiếp được không ạ",
+                "mình có thể đến mua hàng trực tiếp được không",
+                "mình đến xem hàng được không ạ",
+                "mình đến xem hàng được không"
+            ],
+            "responses": [
+                "Dạ, quý khách có thể đến xem hàng tại 123 đường số 1, quận 1, TP.HCM ạ"
+            ],
+            "tag": "Address"
+        },
+        {
+            "patterns": [
+                "Giao hàng như thế nào ạ",
+                "Giao hàng như thế nào",
+                "Giao hàng bao lâu ạ",
+                "Giao hàng bao lâu",
+                "Giao hàng bao nhiêu tiền ạ",
+                "Giao hàng bao nhiêu tiền"
+            ],
+            "responses": [
+                "Quý khách có thể đến nhận hàng tại cửa hàng hoặc chúng tôi sẽ giao hàng tận nơi ạ"
+            ],
+            "tag": "delivery"
+        },
+        {
+            "patterns": [
+                "Bảo hành như thế nào ạ",
+                "Bảo hành như thế nào",
+                "Bảo hành bao lâu ạ",
+                "Bảo hành bao lâu"
+            ],
+            "responses": [
+                "Quý khách có thể đến cửa hàng để đổi trả sản phẩm trong vòng 1 tháng ạ"
+            ],
+            "tag": "warranty"
+        },
+        {
+            "patterns": [
+                "Đổi trả như thế nào ạ",
+                "Đổi trả như thế nào",
+                "Đổi trả bao lâu ạ",
+                "Đổi trả bao lâu"
+            ],
+            "responses": [
+                "Quý khách có thể đến cửa hàng để đổi trả sản phẩm trong vòng 1 tháng ạ"
+            ],
+            "tag": "return"
+        },
+        {
+            "patterns": [
+                "Liên hệ như thế nào ạ",
+                "Liên hệ như thế nào",
+                "Liên hệ bao nhiêu ạ",
+                "Liên hệ bao nhiêu"
+            ],
+            "responses": [
+                "Quý khách có thể liên hệ qua số điện thoại 0123456789 hoặc email test@gmail.com"
+            ],
+            "tag": "contact"
+        }
+    ]
+}

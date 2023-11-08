@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes.index import role, rescue_service, car_type, user, customer, car_info, station, charging_port, comment, order
+from chat.index import chatRoute
 from constants.env_value import APP_NAME, DESCRIPTION_APP, VERSION
 
 app = FastAPI(
@@ -25,6 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(chatRoute, prefix="/chat", tags=["Chat"])
 app.include_router(order, prefix="/order", tags=["Order"])
 app.include_router(comment, prefix="/comment", tags=["Comment"])
 app.include_router(customer, prefix="/customer", tags=["Customer"])

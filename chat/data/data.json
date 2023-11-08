@@ -1,0 +1,133 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "description": "Lời chào nhưng đây là demo",
+            "patterns": [
+                "Xin chào",
+                "hello bạn",
+                "helo bạn",
+                "hi bạn",
+                "shop oi",
+                "hi",
+                "aloo"
+            ],
+            "responses": [
+                "Dạ shop xin nghe ạ, không biết shop có thể giúp gì được không ạ",
+                "Nhat shop xin nghe ạ, không biết shop có thể giúp gì được không ạ"
+            ],
+            "createdAt": "2023-01-29T10:19:04.097Z",
+            "updatedAt": "2023-01-29T13:54:32.012Z",
+            "id": "63d6481843af0bbabafcf134"
+        },
+        {
+            "tag": "iphone x",
+            "description": "điện thoại iphone X",
+            "patterns": [
+                "còn iphone x không",
+                "iphone x",
+                "Giá iphone x bao nhiêu",
+                "giá iphonex"
+            ],
+            "responses": [
+                "dạ iphone x bên em đang bán với giá là 5tr999 ạ, quý khách có thể đặt hàng trực tiếp hoặc ra cửa hàng bên em để mua và thử ạ"
+            ],
+            "createdAt": "2023-01-29T11:31:50.641Z",
+            "updatedAt": "2023-01-30T16:14:59.796Z",
+            "id": "63d6592643af0bbabafcf166"
+        },
+        {
+            "tag": "laptap",
+            "description": "laptiop",
+            "patterns": [
+                "còn laptop không",
+                "loptop"
+            ],
+            "responses": [
+                "dạ còn ạ"
+            ],
+            "createdAt": "2023-01-29T11:35:24.216Z",
+            "updatedAt": "2023-01-29T11:35:24.216Z",
+            "id": "63d659fc43af0bbabafcf18f"
+        },
+        {
+            "tag": "ipad",
+            "description": "mua ipad",
+            "patterns": [
+                "còn ipad không"
+            ],
+            "responses": [
+                "Dạ còn hàng quý khách có thể xem tại đây: http://localhost:3006/product/63a1335ec5a645c85c16f813"
+            ],
+            "createdAt": "2023-01-29T11:43:27.273Z",
+            "updatedAt": "2023-01-29T13:56:56.546Z",
+            "id": "63d65bdf43af0bbabafcf1a6"
+        },
+        {
+            "tag": "address",
+            "description": "Vị trí cửa hàng",
+            "patterns": [
+                "Vị trí",
+                "Shop ở đâu",
+                "cửa hàng ở đâu",
+                "mua hàng trực tiếp ở đâu",
+                "chỗ nào",
+                "cửa hàng ở chỗ nào"
+            ],
+            "responses": [
+                "Dạ shop em ở Cộng Hòa, Phường 13, Tân Bình, TP.HCM"
+            ],
+            "createdAt": "2023-01-30T16:09:05.858Z",
+            "updatedAt": "2023-01-30T16:10:10.375Z",
+            "id": "63d7eba160d9da872d7824f0"
+        },
+        {
+            "tag": "pay",
+            "description": "thanh toán như thế nào ?",
+            "patterns": [
+                "thanh toán như thế nào",
+                "thanh toán bằng gì",
+                "thanh toán bằng momo được không",
+                "có dùng tiền mặt được không",
+                "thoan toán bằng tiền mặt được không"
+            ],
+            "responses": [
+                "Dạ cửa shop bên em đang thanh toán trực tiếp bằng paypal ạ. hoặc quý khách có thể ra cửa hàng của em để mua trực tiếp ạ"
+            ],
+            "createdAt": "2023-01-30T16:12:24.410Z",
+            "updatedAt": "2023-01-30T16:13:22.502Z",
+            "id": "63d7ec6860d9da872d7824fc"
+        },
+        {
+            "tag": "xinhgai",
+            "description": "ngọc có xinh gái không",
+            "patterns": [
+                "ngọc có xinh gái không",
+                "Hồng Ngọc",
+                "Đỗ Hồng Ngọc"
+            ],
+            "responses": [
+                "Có ạ bạn Ngọc Xing gái nhất trần đời"
+            ],
+            "createdAt": "2023-02-02T06:50:14.558Z",
+            "updatedAt": "2023-02-02T06:55:36.840Z",
+            "id": "63db5d266bcbda1085de770e"
+        },
+        {
+            "tag": "BeNhat",
+            "description": "Thông tin về admin",
+            "patterns": [
+                "Ai là chủ web này",
+                "Chủ trang web ",
+                "admin là ai",
+                "ai là admin"
+            ],
+            "responses": [
+                "Dạ Nhật Desu là chủ trang web này ạ"
+            ],
+            "createdAt": "2023-02-02T06:57:22.228Z",
+            "updatedAt": "2023-02-02T06:57:22.228Z",
+            "id": "63db5ed26bcbda1085de7727"
+        }
+    ]
+}

@@ -2,3 +2,5 @@ api link: http://127.0.0.1:8000/docs
 baseurl: http://127.0.0.1:8000
 tk admin: admin@gmail.com
 mk admin: 123456
+
+install thư viện không bị timeout: pip install -r requirements.txt --default-timeout=1000
