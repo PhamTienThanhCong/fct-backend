@@ -1,0 +1,4 @@
+api link: http://127.0.0.1:8000/docs
+baseurl: http://127.0.0.1:8000
+tk admin: admin@gmail.com
+mk admin: 123456
