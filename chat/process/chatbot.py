@@ -6,6 +6,7 @@ import tensorflow as tf
 import random
 import pickle
 import json
+import os
 
 # set up stemmer
 stemmer = LancasterStemmer()
@@ -19,10 +20,12 @@ train_y = data['train_y']
 
 # mở file json
 try:
-    with open('./chat/data/data.json') as json_data:
+    
+    with open('./chat/data/data.json', encoding="utf8") as json_data:
         intents = json.load(json_data)
-except:
+except Exception as e:
     print("Hệ thống đang bị lỗi, vui lòng thử lại sau!")
+    print(e)
     exit()
 
 # config config model
