@@ -18,7 +18,7 @@ def crawl_website(url):
     
 def read_json():
     try:
-        with open('./chat/data/data.json') as json_file:
+        with open('./chat/data/data.json', encoding='utf-8') as json_file:
             data = json.load(json_file)
         return data
     except:
