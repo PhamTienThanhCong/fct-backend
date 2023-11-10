@@ -21,7 +21,7 @@ async def chat(request: ChatRequest):
     response = chatbot.chatResponse(message) or "I don't understand"
     return {"message": response}
 
-@chatRoute.post("/training", response_model=ChatRequest)
+@chatRoute.post("/training")
 async def train_your_dataset(auth=Depends(auth_handler.auth_wrapper_admin)):
     if training.training():
         return {"message": "Training success please restart server"}

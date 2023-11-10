@@ -13,7 +13,7 @@ stemmer = LancasterStemmer()
 # Đọc file json
 def read_json_file():
     try:
-        with open("./data/data.json", 'r', encoding='utf-8') as f:
+        with open("./chat/data/data.json", 'r', encoding='utf-8') as f:
             data = json.load(f)
         return data
     except Exception as e:

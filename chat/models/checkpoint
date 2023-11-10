@@ -1,2 +1,2 @@
-model_checkpoint_path: "C:\\Users\\congp\\OneDrive\\Desktop\\nhat website\\api-chatbot\\models\\model.tflearn"
-all_model_checkpoint_paths: "C:\\Users\\congp\\OneDrive\\Desktop\\nhat website\\api-chatbot\\models\\model.tflearn"
+model_checkpoint_path: "C:\\Users\\Administrator\\Desktop\\code\\fct-backend\\chat\\models\\model.tflearn"
+all_model_checkpoint_paths: "C:\\Users\\Administrator\\Desktop\\code\\fct-backend\\chat\\models\\model.tflearn"
