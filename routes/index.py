@@ -12,3 +12,4 @@ from routes.charging_port import charging_port
 from routes.comment import comment
 from routes.order import order
 from routes.chat import chat
+from routes.fake_data import fake_data

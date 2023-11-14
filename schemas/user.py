@@ -5,7 +5,7 @@ class User(BaseModel):
     role_id: int
     email: constr(max_length=250)
     full_name: constr(max_length=100)
-    phone: constr(max_length=20)
+    phone: constr(max_length=35)
     address: constr(max_length=255)
     card_id: constr(max_length=25)
     title: Optional[constr(max_length=100)]

@@ -7,6 +7,7 @@ from sqlalchemy import func, select
 from models.user import users
 from models.role import roles
 from schemas.user import UserLogin, UserPayload, UserAll
+from faker import Faker
 
 user = APIRouter()
 auth_handler = AuthHandler()
