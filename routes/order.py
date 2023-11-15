@@ -23,7 +23,7 @@ def format_respond(data):
         "status": ORDER_STATUS_TEXT[data["status"]],
         "start_time": data["start_time"],
         "end_time": data["end_time"],
-        "total_price": str(data["total_price"]) + " USD",
+        "total_price": str(data["total_price"]) + " VND",
         "total_time": str(data["total_time"]) + " hours",
         "created_at": data["created_at"],
         "customer": {

@@ -16,7 +16,7 @@ def format_respond(data):
         "id": data["id"],
         "station_id": data["station_id"],
         "port_code": data["port_code"],
-        "price": str(data["price"]) + " USD",
+        "price": str(data["price"]) + " VND",
         "power": str(data["power"]) + " kW",
         "status": CHARING_STATUS_TEXT[data["status"]],
     }
