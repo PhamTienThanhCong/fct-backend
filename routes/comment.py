@@ -29,8 +29,12 @@ def convert_to_comment_dict(comment):
     }
 
 @comment.get("/{station_id}", response_model=List[CommentResponse])
-async def get_comments_by_station_id(station_id: int):
-    query = select([comments, customers]).where(comments.c.station_id == station_id).select_from(comments.join(customers)).where(comments.c.customer_id == customers.c.id)
+async def get_comments_by_station_id(
+    station_id: int,
+    skip: int = 0,
+    limit: int = 10,
+    ):
+    query = select([comments, customers]).where(comments.c.station_id == station_id).select_from(comments.join(customers)).where(comments.c.customer_id == customers.c.id).offset(skip).limit(limit)
     result = conn.execute(query)
     return [convert_to_comment_dict(row) for row in result]
 

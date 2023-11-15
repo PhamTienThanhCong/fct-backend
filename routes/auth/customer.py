@@ -27,8 +27,12 @@ async def get_me(auth=Depends(auth_handler.auth_wrapper_user)):
     return conn.execute(customers.select().where(customers.c.id == auth["id"])).first()
 
 @customer.get("/", response_model=List[CustomerRepose])
-async def get_all_customers():
-    return conn.execute(customers.select()).fetchall()
+async def get_all_customers(
+    skip: int = 0,
+    limit: int = 10,
+):
+    query = customers.select().offset(skip).limit(limit)
+    return conn.execute(query).fetchall()
 
 # get customer by id
 @customer.get("/{id}", response_model=CustomerRepose)

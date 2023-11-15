@@ -46,8 +46,12 @@ async def get_user_by_token(auth=Depends(auth_handler.auth_wrapper_admin)):
 
 
 @user.get('/', response_model=List[UserAll])
-async def get_all_users():
-    return conn.execute(users.select()).fetchall()
+async def get_all_users(
+    skip: int = 0,
+    limit: int = 10,
+):
+    query = users.select().offset(skip).limit(limit)
+    return conn.execute(query).fetchall()
 
 # get user by id
 @user.get('/{id}', response_model=UserAll)

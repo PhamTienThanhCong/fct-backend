@@ -12,8 +12,12 @@ auth_handler = AuthHandler()
 
 # get all car_type
 @car_type.get("/", response_model=List[CarType])
-async def get_all_car_type():
-    return conn.execute(car_types.select()).fetchall()
+async def get_all_car_type(
+    skip: int = 0,
+    limit: int = 10,
+):
+    query = car_types.select().offset(skip).limit(limit)
+    return conn.execute(query).fetchall()
 
 # create new car_type
 @car_type.post("/", response_model=CarType)

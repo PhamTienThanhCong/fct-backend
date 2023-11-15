@@ -12,8 +12,12 @@ auth_handler = AuthHandler()
 
 # get all car_info
 @car_info.get("/", response_model=List[CarInfo])
-async def get_all_car_info():
-    return conn.execute(car_infos.select()).fetchall()
+async def get_all_car_info(
+    skip: int = 0,
+    limit: int = 10,
+):
+    query = car_infos.select().offset(skip).limit(limit)
+    return conn.execute(query).fetchall()
 
 # get car by id 
 @car_info.get("/{id}", response_model=CarInfoId)

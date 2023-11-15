@@ -10,8 +10,12 @@ auth_handler = AuthHandler()
 
 # get all rescue_service
 @rescue_service.get("/", response_model=List[RescueServiceAll])
-async def get_all_rescue_service():
-    return conn.execute(rescue_services.select()).fetchall()
+async def get_all_rescue_service(
+    skip: int = 0,
+    limit: int = 10,
+):
+    query = rescue_services.select().offset(skip).limit(limit)
+    return conn.execute(query).fetchall()
 
 # create new rescue_service
 @rescue_service.post("/", response_model=RescueServiceAll)
